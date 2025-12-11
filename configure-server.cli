@@ -1,24 +1,21 @@
 # Batch script to configure the security domains and define the database query used to authenticate users
 batch
 
-# Add a filesystem realm called BusinessRealm in the jboss.server.config directory
-/subsystem=elytron/filesystem-realm=BusinessRealm:add(path=business-realm-users,relative-to=jboss.server.config.dir)
+/subsystem=elytron/token-realm=jwt-realm:add(principal-claim="preferred_username",jwt={issuer=["http://localhost:8081/realms/myrealm"],key-map={"Ws8DaJZLc0FIL0ni4I3ZPsBJ2WaIok_vpRoFRfU3GCk"=>"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkNVaQt+Oq+/tryl+B6U+SoUvgAPd/7BOy8MjZqZrQEyz0szIAajit2Dt9vDtweHLgOz61dl6Pjn+Og9XdaOuIbGOQu8GXPVcUB5wYbwR5rmSUYElhdbnLWioTLSIQI+RXgs0j1jgick8EHjkUXXZhxV7zSivv4jrJeo6PbkQueUUcYzGAkkP1qOxDPc0wtjMNZmOraGCZpF65JpSAGoIPseFLDiAUV1Lez0gnakfnod2bGAf0JdrDoug802CqxqPNRdp87I+LvZTfXf9KBB+FRwQCqKr0fZJNZeOBrDcp9qDjRas8iotQXUmdpawIcMZs6Exlon1PHR7pHuXmmcf2QIDAQAB-----END PUBLIC KEY-----"}})
 
-# Add user alice with Admin role
-/subsystem=elytron/filesystem-realm=BusinessRealm:add-identity(identity=alice)
-/subsystem=elytron/filesystem-realm=BusinessRealm:add-identity-attribute(identity=alice, name=Roles, value=["Admin"])
+/subsystem=elytron/security-domain=ApplicationDomain:list-add(name=realms, value={realm=jwt-realm})
 
-# Add user bob with no roles
-/subsystem=elytron/filesystem-realm=BusinessRealm:add-identity(identity=bob)
+/subsystem=elytron/sasl-authentication-factory=application-sasl-authentication:list-add(name=mechanism-configurations, value={mechanism-name=OAUTHBEARER, mechanism-realm-configurations = [{realm-name = jwt-realm}]})
 
-# Add a security domain that references our newly created realm
-/subsystem=elytron/security-domain=BusinessDomain:add(realms=[{realm=BusinessRealm}],default-realm=BusinessRealm,permission-mapper=default-permission-mapper)
+/subsystem=elytron/security-domain=ApplicationDomain/:write-attribute(name=default-realm,value=jwt-realm)
+
+
+
 
 # Update the application security domain mappings in the EJB3 subsystem
-/subsystem=ejb3/application-security-domain=BusinessDomain:add(security-domain=BusinessDomain)
-
-/subsystem=elytron/virtual-security-domain=business-domain.ear:add(outflow-security-domains=[BusinessDomain])
-/subsystem=elytron/security-domain=BusinessDomain:write-attribute(name=trusted-virtual-security-domains, value=[business-domain.ear])
+#/subsystem=ejb3/application-security-domain=BusinessDomain:add(security-domain=BusinessDomain)
+#/subsystem=elytron/virtual-security-domain=business-domain.ear:add(outflow-security-domains=[BusinessDomain])
+#/subsystem=elytron/security-domain=BusinessDomain:write-attribute(name=trusted-virtual-security-domains, value=[business-domain.ear])
 
 # Run the batch commands
 run-batch

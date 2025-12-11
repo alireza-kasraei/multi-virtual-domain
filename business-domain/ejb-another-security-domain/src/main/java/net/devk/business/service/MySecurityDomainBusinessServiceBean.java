@@ -5,7 +5,7 @@ import org.jboss.logging.Logger;
 import org.wildfly.security.auth.server.SecurityDomain;
 import org.wildfly.security.auth.server.SecurityIdentity;
 
-@org.jboss.ejb3.annotation.SecurityDomain("MySecurityDomain")
+@org.jboss.ejb3.annotation.SecurityDomain("other")
 @Stateless
 public class MySecurityDomainBusinessServiceBean implements MySecurityDomainBusinessService {
 

@@ -1,8 +1,12 @@
 {
-    "client-id" : "myclient",
-    "provider-url" : "${env.OIDC_PROVIDER_URL:http://localhost:8081/realms/myrealm}",
-    "public-client" : "true",
-    "principal-attribute" : "preferred_username",
-    "ssl-required" : "EXTERNAL"
+    "realm": "myrealm",
+    "auth-server-url": "http://localhost:8081/",
+    "ssl-required": "external",
+    "resource": "myclient",
+    "verify-token-audience": true,
+    "credentials": {
+        "secret": "1RevGaBShLOSHecZeVmvvcm4TF5m9Cd4"
+    },
+    "use-resource-role-mappings": true,
+    "confidential-port": 0
 }
-
