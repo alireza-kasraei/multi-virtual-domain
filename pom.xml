@@ -22,7 +22,6 @@
 
     <modules>
         <module>business-domain</module>
-        <module>echo</module>
     </modules>
 
     <dependencyManagement>
@@ -45,12 +44,6 @@
                 <artifactId>business-web</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>echo-ejb</artifactId>
-                <version>${project.version}</version>
-                <type>ejb</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
