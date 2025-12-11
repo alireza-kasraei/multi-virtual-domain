@@ -1,0 +1,21 @@
+<jboss-deployment-structure>
+    <!--<deployment>
+        <dependencies>
+            <module name="echo-ejb.jar" export="true"/>
+        </dependencies>
+    </deployment>-->
+    <sub-deployment name="business-ejb.jar">
+        <!-- This corresponds to the module for a web deployment -->
+        <!-- it can use all the same tags as the <deployment> entry above -->
+        <dependencies>
+            <!-- Adds a dependency on a ejb jar. This could also be done with a Class-Path entry -->
+            <module name="deployment.echo.ear.echo-ejb.jar" />
+        </dependencies>
+        <!-- Set's local resources to have the lowest priority -->
+        <!-- If the same class is both in the sub deployment and in another sub deployment that -->
+        <!-- is visible to the war, then the Class from the other deployment will be loaded,  -->
+        <!-- rather than the class actually packaged in the war. -->
+        <!-- This can be used to resolve ClassCastExceptions  if the same class is in multiple sub deployments-->
+        <local-last value="true" />
+    </sub-deployment>
+</jboss-deployment-structure>

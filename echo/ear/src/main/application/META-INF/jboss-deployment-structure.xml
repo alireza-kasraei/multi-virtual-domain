@@ -1,0 +1,7 @@
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <module name="deployment.echo.ear.echo-ejb.jar" export="true"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>
