@@ -13,9 +13,9 @@
 
     <modules>
         <module>ear</module>
-        <module>ejb</module>
+        <module>calculator-ejb</module>
+        <module>echo-ejb</module>
         <module>web</module>
-        <module>ejb-another-security-domain</module>
     </modules>
 
 

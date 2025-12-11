@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import net.devk.business.service.BusinessService;
+import net.devk.business.service.calculator.CalculatorService;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -18,15 +18,15 @@ import java.io.PrintWriter;
 @WebServlet("/secured")
 public class SecuredServlet extends HttpServlet {
 
-    @EJB(lookup = "java:global/business-domain/business-ejb/BusinessServiceBean!net.devk.business.service.BusinessService")
-    private BusinessService businessService;
+    @EJB(lookup = "java:global/business-domain/calculator-ejb/CalculatorServiceBean!net.devk.business.service.calculator.CalculatorService")
+    private CalculatorService calculatorService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        BusinessService bean = lookup(BusinessService.class, "java:global/virtual-security-domain-to-domain/virtual-security-domain-to-domain-ejb/EntryBean");
+//        CalculatorService bean = lookup(CalculatorService.class, "java:global/virtual-security-domain-to-domain/virtual-security-domain-to-domain-ejb/EntryBean");
         final PrintWriter writer = resp.getWriter();
 
-        writer.println("<html><head><title>virtual-security-domain-to-domain</title></head><body>");
+        writer.println("<html><head><title>Elytron test application</title></head><body>");
         writer.println("<h1>Successfully logged into Secured Servlet with OIDC</h1>");
         writer.println("<h2>Identity as visible to servlet.</h2>");
         writer.println(String.format("<p>Principal  : %s</p>", req.getUserPrincipal().getName()));
@@ -34,12 +34,7 @@ public class SecuredServlet extends HttpServlet {
 
         writer.println(String.format("<p>Caller Has Role '%s'=%b</p>", "User", req.isUserInRole("User")));
         writer.println(String.format("<p>Caller Has Role '%s'=%b</p>", "Admin", req.isUserInRole("Admin")));
-
-        writer.println("<h2>Identity as visible to EntryBean.</h2>");
-
-        writer.println(String.format("<p>got random message : %s </p>", businessService.getRandomMessage()));
-
-
+        writer.println(String.format("<p>1+2 : %s </p>", calculatorService.add(1, 2)));
         writer.println("</body></html>");
         writer.close();
     }

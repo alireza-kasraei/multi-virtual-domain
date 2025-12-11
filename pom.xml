@@ -37,13 +37,13 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>business-ejb</artifactId>
+                <artifactId>calculator-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>ejb-another-security-domain</artifactId>
+                <artifactId>echo-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>

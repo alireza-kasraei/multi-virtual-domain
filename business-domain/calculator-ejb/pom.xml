@@ -4,11 +4,11 @@
     <parent>
         <groupId>net.devk</groupId>
         <artifactId>business-domain</artifactId>
-        <relativePath>../pom.xml</relativePath>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>ejb-another-security-domain</artifactId>
+    <artifactId>calculator-ejb</artifactId>
     <packaging>ejb</packaging>
 
 
@@ -34,16 +34,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>net.devk</groupId>
+            <artifactId>echo-ejb</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.wildfly.security</groupId>
             <artifactId>wildfly-elytron</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>net.devk</groupId>
-            <artifactId>commons</artifactId>
-            <scope>compile</scope>
-        </dependency>
-
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -57,4 +57,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

@@ -12,5 +12,13 @@
 
     <artifactId>commons</artifactId>
 
+  <!--  <dependencies>
+        <dependency>
+            <groupId>jakarta.ejb</groupId>
+            <artifactId>jakarta.ejb-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>-->
+
 
 </project>

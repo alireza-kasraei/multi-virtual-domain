@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>business-ejb</artifactId>
+            <artifactId>calculator-ejb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
             <scope>provided</scope>

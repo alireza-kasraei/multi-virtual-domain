@@ -14,12 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>business-ejb</artifactId>
+            <artifactId>calculator-ejb</artifactId>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ejb-another-security-domain</artifactId>
+            <artifactId>echo-ejb</artifactId>
             <type>ejb</type>
         </dependency>
         <dependency>

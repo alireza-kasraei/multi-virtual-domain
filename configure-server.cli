@@ -1,6 +1,14 @@
 # Batch script to configure the security domains and define the database query used to authenticate users
 batch
 
+/subsystem=logging/logger=org.wildfly.security:add(level=TRACE)
+
+# For more specific Elytron authentication logs
+/subsystem=logging/logger=org.wildfly.security.auth:add(level=TRACE)
+
+# For SASL-specific logs
+/subsystem=logging/logger=org.wildfly.security.sasl:add(level=TRACE)
+
 /subsystem=elytron/token-realm=jwt-realm:add(principal-claim="preferred_username",jwt={issuer=["http://localhost:8081/realms/myrealm"],key-map={"Ws8DaJZLc0FIL0ni4I3ZPsBJ2WaIok_vpRoFRfU3GCk"=>"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkNVaQt+Oq+/tryl+B6U+SoUvgAPd/7BOy8MjZqZrQEyz0szIAajit2Dt9vDtweHLgOz61dl6Pjn+Og9XdaOuIbGOQu8GXPVcUB5wYbwR5rmSUYElhdbnLWioTLSIQI+RXgs0j1jgick8EHjkUXXZhxV7zSivv4jrJeo6PbkQueUUcYzGAkkP1qOxDPc0wtjMNZmOraGCZpF65JpSAGoIPseFLDiAUV1Lez0gnakfnod2bGAf0JdrDoug802CqxqPNRdp87I+LvZTfXf9KBB+FRwQCqKr0fZJNZeOBrDcp9qDjRas8iotQXUmdpawIcMZs6Exlon1PHR7pHuXmmcf2QIDAQAB-----END PUBLIC KEY-----"}})
 
 /subsystem=elytron/security-domain=ApplicationDomain:list-add(name=realms, value={realm=jwt-realm})
