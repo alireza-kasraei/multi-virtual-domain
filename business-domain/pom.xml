@@ -15,6 +15,7 @@
         <module>ear</module>
         <module>ejb</module>
         <module>web</module>
+        <module>ejb-another-security-domain</module>
     </modules>
 
 
