@@ -1,0 +1,40 @@
+/subsystem=logging/logger=org.wildfly.security:add(level=TRACE)
+/subsystem=logging/logger=org.wildfly.security.auth:add(level=TRACE)
+/subsystem=logging/logger=org.wildfly.security.sasl:add(level=TRACE)
+
+/subsystem=ejb3/:write-attribute(name=default-missing-method-permissions-deny-access,value=false)
+
+/subsystem=elytron/custom-role-decoder=jwtRoleDecoder:add(module=net.devk.elytron.helper,class-name=net.devk.elytron.helper.JwtRoleDecoder)
+
+/subsystem=elytron/token-realm=jwt-realm:add(role-decoder=jwtRoleDecoder,principal-claim="preferred_username",jwt={issuer=["http://localhost:8081/realms/myrealm"],key-map={"${kid}"=>"-----BEGIN PUBLIC KEY-----${key}-----END PUBLIC KEY-----"}})
+
+
+
+
+/subsystem=elytron/sasl-authentication-factory=application-sasl-authentication:list-add(name=mechanism-configurations, value={mechanism-name=OAUTHBEARER, mechanism-realm-configurations = [{realm-name = jwt-realm}]})
+
+
+/subsystem=elytron/custom-realm=myOidcRealm:add(module=org.wildfly.security.elytron-http-oidc, class-name=org.wildfly.security.http.oidc.OidcSecurityRealm)
+/subsystem=elytron/security-domain=myDomain:add(default-realm=myOidcRealm, permission-mapper=default-permission-mapper,security-event-listener=local-audit, realms=[ {realm=myOidcRealm}])
+
+/subsystem=elytron/security-domain=myDomain:list-add(name=realms, value={realm=jwt-realm})
+/subsystem=elytron/security-domain=myDomain/:write-attribute(name=default-realm,value=jwt-realm)
+
+/subsystem=elytron/constant-realm-mapper=oidc-realm-mapper:add(realm-name=myOidcRealm)
+
+
+/subsystem=elytron/service-loader-http-server-mechanism-factory=myFactory:add(module=org.wildfly.security.elytron-http-oidc)
+/subsystem=elytron/aggregate-http-server-mechanism-factory=http-server-mechanism-factory:add(http-server-mechanism-factories=[myFactory, global])
+/subsystem=elytron/http-authentication-factory=myMechanism:add(http-server-mechanism-factory=myFactory,security-domain=myDomain,mechanism-configurations=[ {mechanism-name=OIDC,mechanism-realm-configurations=[{realm-name=myOidcRealm,realm-mapper=oidc-realm-mapper}]}])
+
+
+/subsystem=elytron/sasl-authentication-factory=application-sasl-authentication/:write-attribute(name=security-domain,value=myDomain)
+/subsystem=remoting/http-connector=http-remoting-connector/:write-attribute(name=sasl-authentication-factory,value=application-sasl-authentication)
+/subsystem=remoting/http-connector=http-remoting-connector/:undefine-attribute(name=security-realm)
+
+
+
+/subsystem=undertow/application-security-domain=myAppDomain:add(http-authentication-factory=myMechanism,override-deployment-config=true)
+/subsystem=ejb3/application-security-domain=myAppDomain:add(security-domain=myDomain)
+
+

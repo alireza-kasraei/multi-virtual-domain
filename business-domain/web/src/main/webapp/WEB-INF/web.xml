@@ -12,10 +12,14 @@
         </auth-constraint>   
     </security-constraint>
 
+    <listener>
+        <listener-class>org.wildfly.security.http.oidc.OidcConfigurationServletListener</listener-class>
+    </listener>
+
    <!-- Configure login to be OIDC -->
-   <login-config>
+<!--   <login-config>
       <auth-method>OIDC</auth-method>
-   </login-config>
+   </login-config>-->
 
    <security-role>
        <role-name>*</role-name>

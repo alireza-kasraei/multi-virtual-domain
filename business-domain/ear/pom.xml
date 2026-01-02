@@ -14,12 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>calculator-ejb</artifactId>
+            <artifactId>business-ejb</artifactId>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>echo-ejb</artifactId>
+            <artifactId>secured-ejb</artifactId>
             <type>ejb</type>
         </dependency>
         <dependency>
@@ -58,6 +58,26 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <configuration>
                     <skip>false</skip>
+                    <debug>true</debug>
+                    <feature-packs>
+                        <feature-pack>
+                            <location>wildfly@maven(org.jboss.universe:community-universe)#${version.wildfly.version}
+                            </location>
+                        </feature-pack>
+                    </feature-packs>
+                    <galleon-options>
+                        <jboss-fork-embedded>true</jboss-fork-embedded>
+                    </galleon-options>
+                    <scripts>
+                        <script>./configure-server.cli</script>
+                    </scripts>
+                    <autoReload>true</autoReload>
+                    <batch>true</batch>
+                    <server-config>standalone-full-ha.xml</server-config>
+                    <resolveExpressions>true</resolveExpressions>
+                    <propertiesFiles>
+                        <propertiesFile>../../keycloak/realm.properties</propertiesFile>
+                    </propertiesFiles>
                 </configuration>
             </plugin>
         </plugins>

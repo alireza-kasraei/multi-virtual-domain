@@ -13,10 +13,21 @@
 
     <modules>
         <module>ear</module>
-        <module>calculator-ejb</module>
-        <module>echo-ejb</module>
+        <module>services</module>
         <module>web</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-ee-with-tools</artifactId>
+                <version>${version.wildfly.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
 </project>

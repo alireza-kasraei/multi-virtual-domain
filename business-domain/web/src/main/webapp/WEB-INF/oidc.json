@@ -5,7 +5,7 @@
     "resource": "myclient",
     "verify-token-audience": true,
     "credentials": {
-        "secret": "1RevGaBShLOSHecZeVmvvcm4TF5m9Cd4"
+        "secret": "Xyedh9LkftLskTdwNow01IGlYpWXmUGo"
     },
     "use-resource-role-mappings": true,
     "confidential-port": 0

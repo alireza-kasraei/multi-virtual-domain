@@ -21,6 +21,6 @@
     xsi:schemaLocation="http://www.jboss.org/schema/jbossas
     http://www.jboss.org/schema/jbossas/jboss-web_7_2.xsd">
    <!-- Configure usage of the security domain "other" -->
-   <security-domain>other</security-domain>
-   <disable-audit>true</disable-audit>
+   <security-domain>myAppDomain</security-domain>
+   <!--<disable-audit>true</disable-audit>-->
 </jboss-web>
