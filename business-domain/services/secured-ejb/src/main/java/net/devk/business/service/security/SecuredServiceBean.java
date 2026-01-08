@@ -21,7 +21,7 @@ public class SecuredServiceBean implements SecuredService {
         return String.format("Security identity = %s%nRoles: %s", currentSecurityIdentity, rolesBuilder);
     }
 
-    @RolesAllowed("Admin")
+    @RolesAllowed("admin")
     @Override
     public String someAdminOperation() {
         return "Admin says hello!";

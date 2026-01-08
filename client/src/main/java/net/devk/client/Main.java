@@ -14,7 +14,7 @@ public class Main {
     private static String CLIENT_ID = "myclient";
     private static String CLIENT_SECRET = "Xyedh9LkftLskTdwNow01IGlYpWXmUGo";
     private static String USERNAME = "user1";
-    private static String PASSWORD = "user1";
+    private static String PASSWORD = "u";
 
 
     public static void main(String[] args) throws Exception {

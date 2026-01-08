@@ -1,1 +1,0 @@
-module add --name=net.devk.elytron.helper --resources=elytron-helper/target/elytron-helper.jar --dependencies=org.wildfly.security.elytron

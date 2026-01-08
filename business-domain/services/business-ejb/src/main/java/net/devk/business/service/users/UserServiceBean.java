@@ -5,12 +5,12 @@ import jakarta.ejb.Stateless;
 import net.devk.business.service.security.SecuredServiceBean;
 
 @Stateless
-public class UserServiceBean implements UserService {
+public class UserServiceBean {
 
     @EJB(lookup = "java:global/business-domain/secured-ejb/SecuredServiceBean!net.devk.business.common.SecuredService")
     private SecuredServiceBean securedServiceBean;
 
-    @Override
+
     public String getCurrentUserInfo() {
         return securedServiceBean.getCallerInfo();
     }

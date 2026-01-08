@@ -5,9 +5,9 @@ import jakarta.ejb.Stateless;
 import java.util.Locale;
 
 @Stateless
-public class LocaleServiceBean implements LocaleService {
+public class LocaleServiceBean {
 
-    @Override
+
     public String[] getSystemLanguages() {
         return Locale.getISOLanguages();
     }

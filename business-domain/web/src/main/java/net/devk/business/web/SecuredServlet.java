@@ -1,30 +1,29 @@
 package net.devk.business.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import net.devk.business.service.locale.LocaleService;
-import net.devk.business.service.users.AdminService;
-import net.devk.business.service.users.UserService;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-
+import net.devk.business.service.locale.LocaleServiceBean;
+import net.devk.business.service.users.AdminServiceBean;
+import net.devk.business.service.users.UserServiceBean;
 
 @WebServlet("/secured")
 public class SecuredServlet extends HttpServlet {
 
-    @EJB(lookup = "java:global/business-domain/business-ejb/UserServiceBean!net.devk.business.service.users.UserService")
-    private UserService userService;
+    @EJB(lookup = "java:global/business-domain/business-ejb/UserServiceBean")
+    private UserServiceBean userService;
 
-    @EJB(lookup = "java:global/business-domain/business-ejb/AdminServiceBean!net.devk.business.service.users.AdminService")
-    private AdminService adminService;
+    @EJB(lookup = "java:global/business-domain/business-ejb/AdminServiceBean")
+    private AdminServiceBean adminService;
 
-    @EJB(lookup = "java:global/business-domain/business-ejb/LocaleServiceBean!net.devk.business.service.locale.LocaleService")
-    private LocaleService localeService;
+    @EJB(lookup = "java:global/business-domain/business-ejb/LocaleServiceBean")
+    private LocaleServiceBean localeService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,7 +41,8 @@ public class SecuredServlet extends HttpServlet {
         writer.println("<hr/>");
 
         writer.println("<h2>EJB Calls:</h2>");
-        writer.println(String.format("<p>Current user info from UserServiceBean : %s</p>", userService.getCurrentUserInfo()));
+        writer.println(
+                String.format("<p>Current user info from UserServiceBean : %s</p>", userService.getCurrentUserInfo()));
         if (isAdmin) {
             writer.println(String.format("<p>Message from Admin : %s</p>", adminService.getMessageFromAdmin()));
         }

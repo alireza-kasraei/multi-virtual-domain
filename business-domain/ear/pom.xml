@@ -71,10 +71,15 @@
                     <scripts>
                         <script>./configure-server.cli</script>
                     </scripts>
+                    <fork>true</fork>
                     <autoReload>true</autoReload>
                     <batch>true</batch>
+                    <jbossHome>${project.build.directory}/server</jbossHome>
                     <server-config>standalone-full-ha.xml</server-config>
                     <resolveExpressions>true</resolveExpressions>
+                    <system-properties>
+                        <module-path>${elytron-helper-module-path}</module-path>
+                    </system-properties>
                     <propertiesFiles>
                         <propertiesFile>../../keycloak/realm.properties</propertiesFile>
                     </propertiesFiles>
