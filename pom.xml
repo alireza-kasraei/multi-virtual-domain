@@ -16,7 +16,7 @@
         <version.wildfly.version>36.0.0.Final</version.wildfly.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <elytron-helper-module-path>${project.build.directory}/elytron-helper/target/elytron-helper.jar</elytron-helper-module-path>
+        <wildfly.home>${project.build.directory}/server</wildfly.home>
     </properties>
 
     <modules>

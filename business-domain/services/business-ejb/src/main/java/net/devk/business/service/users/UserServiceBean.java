@@ -2,16 +2,16 @@ package net.devk.business.service.users;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
-import net.devk.business.service.security.SecuredServiceBean;
+import net.devk.business.common.SecuredService;
 
 @Stateless
 public class UserServiceBean {
 
     @EJB(lookup = "java:global/business-domain/secured-ejb/SecuredServiceBean!net.devk.business.common.SecuredService")
-    private SecuredServiceBean securedServiceBean;
+    private SecuredService securedService;
 
 
     public String getCurrentUserInfo() {
-        return securedServiceBean.getCallerInfo();
+        return securedService.getCallerInfo();
     }
 }

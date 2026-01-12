@@ -12,6 +12,10 @@
 
     <artifactId>elytron-helper</artifactId>
 
+    <properties>
+        <wildfly.home>${project.parent.build.directory}/server</wildfly.home>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.wildfly.security</groupId>
@@ -39,12 +43,12 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <configuration>
+                    <fork>true</fork>
                     <skip>false</skip>
-                    <debug>true</debug>
-                    <scripts>
-                        <script>./add-module.cli</script>
-                    </scripts>
-                    <resolveExpressions>true</resolveExpressions>
+                    <jboss-home>${wildfly.home}</jboss-home>
+                    <commands>
+                        <command>module add --name=net.devk.elytron.helper --resources=${project.build.directory}${file.separator}${project.artifactId}.jar --dependencies=org.wildfly.security.elytron</command>
+                    </commands>
                 </configuration>
             </plugin>
         </plugins>

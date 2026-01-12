@@ -9,6 +9,6 @@ import org.wildfly.security.authz.Roles;
 public class JwtRoleDecoder implements RoleDecoder {
     @Override
     public Roles decodeRoles(AuthorizationIdentity authorizationIdentity) {
-        return Roles.fromSet(Set.of("admin", "user"));
+        return Roles.fromSet(Set.of("Admin", "User"));
     }
 }

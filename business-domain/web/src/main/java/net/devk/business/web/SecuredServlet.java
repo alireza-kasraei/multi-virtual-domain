@@ -1,17 +1,16 @@
 package net.devk.business.web;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import net.devk.business.service.locale.LocaleServiceBean;
 import net.devk.business.service.users.AdminServiceBean;
 import net.devk.business.service.users.UserServiceBean;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/secured")
 public class SecuredServlet extends HttpServlet {
@@ -21,9 +20,6 @@ public class SecuredServlet extends HttpServlet {
 
     @EJB(lookup = "java:global/business-domain/business-ejb/AdminServiceBean")
     private AdminServiceBean adminService;
-
-    @EJB(lookup = "java:global/business-domain/business-ejb/LocaleServiceBean")
-    private LocaleServiceBean localeService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,14 +42,6 @@ public class SecuredServlet extends HttpServlet {
         if (isAdmin) {
             writer.println(String.format("<p>Message from Admin : %s</p>", adminService.getMessageFromAdmin()));
         }
-        writer.println("<hr/>");
-        writer.println("<h3>System Locales</h3>");
-        String[] systemLanguages = localeService.getSystemLanguages();
-        writer.println("<ul>");
-        for (String systemLanguage : systemLanguages) {
-            writer.println(String.format("<li>%s</li>", systemLanguage));
-        }
-        writer.println("</ul>");
         writer.println("</body></html>");
         writer.close();
     }
