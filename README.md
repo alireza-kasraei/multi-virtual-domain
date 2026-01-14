@@ -1,4 +1,7 @@
-### wildfly 36
+### Propagating security identity between war and ejb deployments in Wildfly with Elytron OIDC
+
+The default wildfly elytron OIDC, does not propagate the security identity from a war deployment to 
+a separate ejb deployment. This example shows how to achieve that with the help of a custom security setup.
 
 to run the keycloak with docker, run this command from the root directory of the project:
 
@@ -14,18 +17,19 @@ This creates an instance of the keycloak and imports the "myrealm" to it.
 2 additional manual steps are needed here which might be automated in the future. first, set a password for the user1,
 then copy the "kid" and the "public key" from the "keys" section of the myrealm and paste them in the realm.properties file.
 
-now build the project simply with:
+now build the project simply with: ```mvn clean install```
 
-```
-mvn clean install
-```
-now from "multi-virtual-domain/business-domain/business-ear":
+start wildfly with: ```mvn wildfly:start -pl business-domain/ear```
 
-start wildfly with: ```mvn wildfly:start```
+deploy our custom wildfly module: ```mvn wildfly:execute-commands -pl elytron-helper```
 
-execute cli commands: ```mvn wildfly:execute-commands```
+execute wildfly configuration script: ```mvn wildfly:execute-commands -pl business-domain/ear```
 
-deploy the application: ```mvn wildfly:deploy```
+and finally deploy the application: ```mvn wildfly:deploy -pl business-domain/ear```
 
 the web application should be available on "http://localhost:8080/business".
 the secured page is on "http://localhost:8080/business/secured" address and it redirects to the keycloak for the authentication.
+login with "user1" user with "user1" password and you should see the message from the EJB with the propagated security identity.
+
+besides that, a java client application can be run which calls the remote ejb directly.
+to run the client, execute: ```java -jar ./client/target/client.jar```
