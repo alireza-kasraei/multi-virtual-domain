@@ -15,7 +15,13 @@ docker run --name keycloak -p 8081:8080 \
 
 This creates an instance of the keycloak and imports the "myrealm" to it.
 2 additional manual steps are needed here which might be automated in the future. first, set a password for the user1,
-then copy the "kid" and the "public key" from the "keys" section of the myrealm and paste them in the realm.properties file.
+then copy the "kid" and the "public key" from the "keys" section of the myrealm and paste them in the 
+keycloak/realm.properties file.
+
+```properties
+kid=Ws8DaJZLc0FIL0ni4I3ZPsBJ2WaIok_vpRoFRfU3GCk
+key=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQE...
+```
 
 now from the root directory, let's build the project simply with: ```./mvnw clean install```
 
