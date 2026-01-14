@@ -17,15 +17,15 @@ This creates an instance of the keycloak and imports the "myrealm" to it.
 2 additional manual steps are needed here which might be automated in the future. first, set a password for the user1,
 then copy the "kid" and the "public key" from the "keys" section of the myrealm and paste them in the realm.properties file.
 
-now build the project simply with: ```mvn clean install```
+now from the root directory, let's build the project simply with: ```./mvnw clean install```
 
-start wildfly with: ```mvn wildfly:start -pl business-domain/ear```
+start wildfly with: ```./mvnw wildfly:start -pl business-domain/ear```
 
-deploy our custom wildfly module: ```mvn wildfly:execute-commands -pl elytron-helper```
+deploy our custom wildfly module: ```./mvnw wildfly:execute-commands -pl elytron-helper```
 
-execute wildfly configuration script: ```mvn wildfly:execute-commands -pl business-domain/ear```
+execute wildfly configuration script: ```./mvnw wildfly:execute-commands -pl business-domain/ear```
 
-and finally deploy the application: ```mvn wildfly:deploy -pl business-domain/ear```
+and finally deploy the application: ```./mvnw wildfly:deploy -pl business-domain/ear```
 
 the web application should be available on "http://localhost:8080/business".
 the secured page is on "http://localhost:8080/business/secured" address and it redirects to the keycloak for the authentication.
@@ -33,3 +33,5 @@ login with "user1" user with "user1" password and you should see the message fro
 
 besides that, a java client application can be run which calls the remote ejb directly.
 to run the client, execute: ```java -jar ./client/target/client.jar```
+
+the wildfly server can be shutdown with: ```./mvnw wildfly:shutdown -pl business-domain/ear```
