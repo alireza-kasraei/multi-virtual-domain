@@ -1,11 +1,21 @@
-### Propagating security identity between war and ejb deployments in Wildfly with Elytron OIDC
+# Wildfly Elytron OIDC Security Identity Propagation Example
+
+This project demonstrates how to propagate security identity between WAR and EJB deployments in Wildfly using Elytron OIDC, with a custom security setup.
+
+## Prerequisites
+
+- Java
+- Maven (or use the Maven Wrapper)
+- Docker
 
 The default wildfly elytron OIDC, does not propagate the security identity from a war deployment to 
 a separate ejb deployment. This example shows how to achieve that with the help of a custom security setup.
 
 to run the keycloak with docker, run this command from the root directory of the project:
 
-```
+### keycloak setup
+
+```zsh
 docker run --name keycloak -p 8081:8080 \ 
         -e KC_BOOTSTRAP_ADMIN_USERNAME=keycloak-admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin \
         -v ./keycloak/data:/opt/keycloak/data/import \
@@ -14,16 +24,12 @@ docker run --name keycloak -p 8081:8080 \
 ```
 
 This creates an instance of the keycloak and imports the "myrealm" to it.
-2 additional manual steps are needed here which might be automated in the future. first, set a password for the user1,
-then copy the "kid" and the "public key" from the "keys" section of the myrealm and paste them in the 
-keycloak/realm.properties file.
 
-```properties
-kid=Ws8DaJZLc0FIL0ni4I3ZPsBJ2WaIok_vpRoFRfU3GCk
-key=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQE...
+now from the root directory, let's build the project simply with: 
+```sh
+./mvnw clean install
 ```
-
-now from the root directory, let's build the project simply with: ```./mvnw clean install```
+a custom maven plugin <b>keycloak-helper</b> creates the realm.properties files which is needed for setting up the wildfly.
 
 start wildfly with: ```./mvnw wildfly:start -pl business-domain/ear```
 

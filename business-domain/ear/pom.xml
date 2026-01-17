@@ -86,6 +86,19 @@
                     </propertiesFiles>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>net.devk</groupId>
+                <artifactId>keycloak-helper</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>keycloak-publickey-resolver</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

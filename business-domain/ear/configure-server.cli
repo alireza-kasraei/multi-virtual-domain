@@ -1,12 +1,3 @@
-if (outcome != success) of /core-service=module-loading/:list-resource-loader-paths(module=net.devk.elytron.helper)   
-    module add --name=net.devk.elytron.helper --resources=${module-path} --dependencies=org.wildfly.security.elytron
-else
-    echo module net.devk.elytron.helper already installed
-end-if
-
-
-
-
 /subsystem=logging/logger=org.wildfly.security:add(level=TRACE)
 /subsystem=logging/logger=org.wildfly.security.auth:add(level=TRACE)
 /subsystem=logging/logger=org.wildfly.security.sasl:add(level=TRACE)
@@ -15,7 +6,7 @@ end-if
 
 /subsystem=elytron/custom-role-decoder=jwtRoleDecoder:add(module=net.devk.elytron.helper,class-name=net.devk.elytron.helper.JwtRoleDecoder)
 
-/subsystem=elytron/token-realm=jwt-realm:add(principal-claim="preferred_username",jwt={issuer=["http://localhost:8081/realms/myrealm"],key-map={"${kid}"=>"-----BEGIN PUBLIC KEY-----${key}-----END PUBLIC KEY-----"}})
+/subsystem=elytron/token-realm=jwt-realm:add(principal-claim="preferred_username",jwt={issuer=["http://localhost:8081/realms/myrealm"],key-map={"${kid}"=>"${key}"}})
 
 
 /subsystem=elytron/sasl-authentication-factory=application-sasl-authentication:list-add(name=mechanism-configurations, value={mechanism-name=OAUTHBEARER, mechanism-realm-configurations = [{realm-name = jwt-realm}]})

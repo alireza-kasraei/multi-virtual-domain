@@ -24,6 +24,8 @@
         <module>client</module>
         <module>commons</module>
         <module>elytron-helper</module>
+        <module>keycloak-helper</module>
+        <module>commons-helper</module>
     </modules>
 
     <dependencyManagement>
