@@ -13,12 +13,10 @@ import org.wildfly.security.auth.server.SecurityIdentity;
 public class SecuredServiceBean implements SecuredService {
 
     @Override
-    public String getCallerInfo() {
+    public String getCaller() {
         SecurityDomain current = SecurityDomain.getCurrent();
         SecurityIdentity currentSecurityIdentity = current.getCurrentSecurityIdentity();
-        StringBuilder rolesBuilder = new StringBuilder();
-        currentSecurityIdentity.getRoles().forEach(role -> rolesBuilder.append(role).append(", "));
-        return String.format("Security identity = %s%nRoles: %s", currentSecurityIdentity, rolesBuilder);
+        return currentSecurityIdentity.getPrincipal().getName();
     }
 
     @RolesAllowed("Admin")

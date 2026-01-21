@@ -12,6 +12,6 @@ public class UserServiceBean {
 
 
     public String getCurrentUserInfo() {
-        return securedService.getCallerInfo();
+        return securedService.getCaller();
     }
 }

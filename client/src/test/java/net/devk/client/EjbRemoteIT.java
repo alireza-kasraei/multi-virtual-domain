@@ -1,13 +1,17 @@
 package net.devk.client;
 
 import net.devk.business.common.SecuredService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Hashtable;
 
-public class Main {
+public class EjbRemoteIT {
+
 
     private static String JNDI_NAME = "ejb:business-domain/secured-ejb/SecuredServiceBean!net.devk.business.common.SecuredService";
     private static String DEFAULT_TOKEN_URL = "http://localhost:8081/realms/myrealm/protocol/openid-connect/token";
@@ -16,17 +20,26 @@ public class Main {
     private static String USERNAME = "user1";
     private static String PASSWORD = "u";
 
+    private static String accessToken;
+    private static SecuredService securedService;
 
-    public static void main(String[] args) throws Exception {
-        AccessTokenHelper.getToken(DEFAULT_TOKEN_URL, CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD)
-                .thenAccept(Main::executeWithToken).get();
+    @BeforeAll
+    public static void init() throws Exception {
+        accessToken = AccessTokenHelper.getToken(DEFAULT_TOKEN_URL, CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD).get();
+        securedService = lookup(SecuredService.class, JNDI_NAME);
     }
 
-    public static void executeWithToken(String accessToken) {
-        SecuredService securedService = lookup(SecuredService.class, JNDI_NAME);
-        System.out.println("caller info = " + AuthenticatedContext.execute(() -> securedService.getCallerInfo(), accessToken));
-        System.out.println("message from admin = " + AuthenticatedContext.execute(() -> securedService.someAdminOperation(), accessToken));
+
+    @Test
+    void callerHasToBeUser1() {
+        Assertions.assertEquals("user1", AuthenticatedContext.execute(() -> securedService.getCaller(), accessToken));
     }
+
+    @Test
+    void testExpectedMessage() {
+        Assertions.assertEquals("Admin says hello!", AuthenticatedContext.execute(() -> securedService.someAdminOperation(), accessToken));
+    }
+
 
     public static <T> T lookup(Class<T> clazz, String jndiName) {
         Object bean = lookup(jndiName);
@@ -56,5 +69,4 @@ public class Main {
         jndiProperties.put("jboss.naming.client.ejb.context", "true");
         return jndiProperties;
     }
-
 }

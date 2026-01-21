@@ -1,7 +1,6 @@
 package net.devk.business.web;
 
 import jakarta.ejb.EJB;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,25 +21,13 @@ public class SecuredServlet extends HttpServlet {
     private AdminServiceBean adminService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         final PrintWriter writer = resp.getWriter();
 
         writer.println("<html><head><title>Elytron OIDC + EJB Remote call</title></head><body>");
-        writer.println("<h1>Successfully logged into Secured Servlet with OIDC</h1>");
-
-        writer.println("<h2>Identity as visible to servlet.</h2>");
-        writer.println(String.format("<p>Principal  : %s</p>", req.getUserPrincipal().getName()));
-        writer.println(String.format("<p>Authentication Type : %s</p>", req.getAuthType()));
-        writer.println(String.format("<p>Caller Has Role '%s'=%b</p>", "User", req.isUserInRole("User")));
-        boolean isAdmin = req.isUserInRole("Admin");
-        writer.println(String.format("<p>Caller Has Role '%s'=%b</p>", "Admin", isAdmin));
-        writer.println("<hr/>");
-
-        writer.println("<h2>EJB Calls:</h2>");
-        writer.println(
-                String.format("<p>Current user info from UserServiceBean : %s</p>", userService.getCurrentUserInfo()));
-        if (isAdmin) {
-            writer.println(String.format("<p>Message from Admin : %s</p>", adminService.getMessageFromAdmin()));
+        writer.println(String.format("<p id=\"callerInfo\">Caller: %s</p>", userService.getCurrentUserInfo()));
+        if (req.isUserInRole("Admin")) {
+            writer.println(String.format("<p id=\"adminMessage\">Message from Admin: %s</p>", adminService.getMessageFromAdmin()));
         }
         writer.println("</body></html>");
         writer.close();
