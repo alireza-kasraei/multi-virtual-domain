@@ -413,7 +413,11 @@
     "enabled" : true,
     "createdTimestamp" : 1765966001868,
     "totp" : false,
-    "credentials" : [ ],
+    "credentials" : [{
+      "type": "password",
+      "value": "u",
+      "temporary": false
+    }],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-myrealm" ],
